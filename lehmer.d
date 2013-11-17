@@ -1,51 +1,52 @@
 module lehmer;
 
-class Random {
+class Lehmer {
+    public:
+    this(long s = 1, long a = A, long m = M) {
+        state = s;
+        modulus = m;
+        multiplier = a;
+        quotient = modulus / multiplier;
+        remainder = modulus % multiplier;
+    }
+
+    long state() const @property { return mstate; }
+    void state(long s) @property { mstate = s; }
+
+    double random() {
+        long t = multiplier * (state % quotient) - remainder * (state / quotient);
+        state = t > 0 ? t : t + modulus;
+        return cast(double)state / cast(double)modulus;
+    }
+
+    static bool isModCompatible(long a, long m) {
+        return m % a < m / a;
+    }
+
+    static const long M = 2147483647;
+    static const long A = 48271;
+
     private:
+    // Simply a prime number, this is the upper bound (exclusive) of the stream
+    // generated
+    long modulus;
+
     // Any full-period, modulus-compatible number to generate the sequence of
     // random numbers
     long multiplier;
 
-    // 2147483647, 2^31 - 1
-    long modulus;
-
-    // This "state" is the seed.
-    // not static to allow multiple instances of this lehmer generator, just
-    // because
+    // This "state" is the seed, it picks the starting point of the stream.
     long mstate;
 
-    public:
-    this(long s = 1) {
-        mstate = s;
-        modulus = 2147483647;
-        multiplier = 48271;
-    }
-
-    long state() const @property {
-        return mstate;
-    }
-
-    void state(long s) @property {
-        mstate = s;
-    }
-
-    double random() {
-        long quotient = modulus / multiplier;
-        long remainder = modulus % multiplier;
-        long t = multiplier * (mstate % quotient) - remainder * (mstate / quotient);
-        if (t > 0)
-            mstate = t;
-        else
-            mstate = t + modulus;
-        return cast(double)state / cast(double)modulus;
-    }
+    long quotient;
+    long remainder;
 }
 
 // From the book:
 // If multiplier is set to 48271, and initial value of state is 1, then
-// after 10,000 calls to random() state should be 399,268,537
+// after 10,000 calls to random() state should be 399268537
 unittest {
-    Random rand = new Random();
+    Lehmer rand = new Lehmer();
     assert(rand.state == 1);
 
     for(int i = 0; i < 10000; i++) {
