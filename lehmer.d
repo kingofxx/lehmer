@@ -45,7 +45,7 @@ class Random {
 // If multiplier is set to 48271, and initial value of state is 1, then
 // after 10,000 calls to random() state should be 399,268,537
 unittest {
-    Random rand = new Random(1);
+    Random rand = new Random();
     assert(rand.state == 1);
 
     for(int i = 0; i < 10000; i++) {
