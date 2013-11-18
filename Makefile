@@ -6,13 +6,16 @@ EXE=-ofSIM
 
 all: next
 
-next: main lehmer
+next: main lehmerstream.o lehmer.o
 	$(D) main.o lehmer.o $(EXE)
 
 main:
 	$(D) main.d $(FLAGS) $(DEBUG)
 
-lehmer:
+lehmerstream.o: lehmer.o
+	$(D) lehmerstream.d $(FLAGS) $(DEBUG)
+
+lehmer.o:
 	$(D) lehmer.d $(FLAGS) $(DEBUG)
 
 clean:
