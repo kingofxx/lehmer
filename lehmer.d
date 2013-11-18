@@ -2,7 +2,7 @@ module lehmer;
 
 class Lehmer {
     public:
-    this(long s = 1, long a = A, long m = M) {
+    pure nothrow @safe this(long s = 1, long a = A, long m = M) {
         state = s;
         modulus = m;
         multiplier = a;
@@ -10,16 +10,16 @@ class Lehmer {
         remainder = modulus % multiplier;
     }
 
-    long state() const @property { return mstate; }
-    void state(long s) @property { mstate = s; }
+    pure nothrow @safe @property long state() const { return mstate; }
+    pure nothrow @safe @property void state(long s) { mstate = s; }
 
-    double random() {
+    pure nothrow @safe double random() {
         long t = multiplier * (state % quotient) - remainder * (state / quotient);
         state = t > 0 ? t : t + modulus;
         return cast(double)state / cast(double)modulus;
     }
 
-    static bool isModCompatible(long a, long m) {
+    pure nothrow @safe static bool isModCompatible(in long a, in long m) {
         return m % a < m / a;
     }
 
