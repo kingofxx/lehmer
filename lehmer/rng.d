@@ -1,4 +1,4 @@
-module lehmer;
+module lehmer.rng;
 
 class Lehmer {
     public:
