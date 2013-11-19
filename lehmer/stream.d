@@ -24,7 +24,6 @@ class LehmerStream {
                 break;
             default:
                 jumpMult = calcJumpMult(numStreams, a, m);
-                assert(streams == 256);
             }
         } else {
             jumpMult = calcJumpMult(numStreams, a, m);
