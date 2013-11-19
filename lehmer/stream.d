@@ -23,12 +23,11 @@ class LehmerStream {
                 jumpMult = jump1024;
                 break;
             default:
-                //TODO kill application, because laziness
+                jumpMult = calcJumpMult(numStreams, a, m);
                 assert(streams == 256);
             }
         } else {
-            // TODO implement a calculator to find good jump multipliers
-            assert(streams == 256);
+            jumpMult = calcJumpMult(numStreams, a, m);
         }
         calls = new ulong[numStreams];
         states = new long[numStreams];
