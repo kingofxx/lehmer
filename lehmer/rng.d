@@ -10,18 +10,20 @@ class Lehmer {
         remainder = modulus % multiplier;
     }
 
-    pure nothrow @safe @property long state() const { return mstate; }
-    pure nothrow @safe @property void state(long s) { mstate = s; }
-
     pure nothrow @safe double random() {
         long t = multiplier * (state % quotient) - remainder * (state / quotient);
         state = t > 0 ? t : t + modulus;
         return cast(double)state / cast(double)modulus;
     }
 
-    pure nothrow @safe static bool isModCompatible(in long a, in long m) {
+    static pure nothrow @safe bool isModCompatible(in long a, in long m) {
         return m % a < m / a;
     }
+
+    pure nothrow @safe @property long state() const { return mstate; }
+    pure nothrow @safe @property void state(long s) { mstate = s; }
+
+    pure nothrow @safe @property long m() const { return modulus; }
 
     static const long M = 2147483647;
     static const long A = 48271;
