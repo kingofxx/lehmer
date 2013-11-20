@@ -1,4 +1,4 @@
-module stream;
+module lehmer.stream;
 
 import rng;
 
