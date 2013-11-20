@@ -4,22 +4,22 @@ RELEASE=-release -O -inline
 FLAGS=-c
 EXE=-ofSIM
 
-all: next
+all: lehmer
 
-next: main stream.o rng.o
-	$(D) main.o stream.o rng.o $(DEBUG) $(EXE)
+lehmer: test.o stream.o rng.o
+	$(D) test.o stream.o rng.o $(DEBUG) $(EXE)
 
-main: stream.o rng.o
-	$(D) main.d $(FLAGS) $(DEBUG)
+test.o: stream.o rng.o
+	$(D) test.d $(FLAGS) $(DEBUG)
 
-stream.o: rng.o
-	$(D) lehmer/stream.d $(FLAGS) $(DEBUG)
+stream.o: stream.d
+	$(D) stream.d $(FLAGS) $(DEBUG)
 
-rng.o:
-	$(D) lehmer/rng.d $(FLAGS) $(DEBUG)
+rng.o: rng.d
+	$(D) rng.d $(FLAGS) $(DEBUG)
 
 test:
-	$(D) main.d lehmer/stream.d lehmer/rng.d -unittest $(FLAGS) $(DEBUG) $(EXE)
+	$(D) test.d stream.d rng.d -unittest $(FLAGS) $(DEBUG) $(EXE)
 
 clean:
 	rm *.o SIM

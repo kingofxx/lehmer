@@ -1,7 +1,7 @@
 import std.stdio;
 
-import lehmer.rng;
-import lehmer.stream;
+import rng;
+import stream;
 
 int main(string[] args) {
     Lehmer rand = new Lehmer(12345);

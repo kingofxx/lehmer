@@ -1,7 +1,6 @@
-module lehmer.stream;
+module stream;
 
-import std.stdio;
-import lehmer.rng;
+import rng;
 
 class LehmerStream {
     public:
@@ -47,7 +46,7 @@ class LehmerStream {
         return num;
     }
 
-    static pure nothrow @safe long calcJumpMod(in long streamCount, in long a, in long m) {
+    static pure nothrow @safe long calcJumpMult(in long streamCount, in long a, in long m) {
         long jump = m / streamCount;
         long mult = modpow(a, jump, m);
         //long mult = (a ^^ jump) % m;
