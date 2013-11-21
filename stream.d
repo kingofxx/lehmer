@@ -1,5 +1,7 @@
 module lehmer.stream;
 
+import std.math;
+
 import rng;
 
 class LehmerStream {
@@ -44,6 +46,16 @@ class LehmerStream {
         double num = rng.random();
         states[stream] = rng.state;
         return num;
+    }
+
+    pure nothrow @safe double uniform(in double l, in double u, in ulong stream) {
+        if (l == 0.0 && u == 1.0)
+            return random(stream);
+        return random(stream) * (l - u) + u;
+    }
+
+    pure nothrow @safe double exponential(in double lambda, in ulong stream) {
+        return -lambda * log(random(stream));
     }
 
     static pure nothrow @safe long calcJumpMult(in long streamCount, in long a, in long m) {
